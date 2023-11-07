@@ -118,8 +118,6 @@ class Inpainting:
         return output_images, _metadata
 
     def app(self):
-        stroke_color = "#FFF"
-        bg_color = "#000"
         col1, col2 = st.columns(2)
         # with col1:
         with col1:
@@ -197,6 +195,8 @@ class Inpainting:
 
             pil_image = Image.open(uploaded_file).convert("RGB")
             img_height, img_width = pil_image.size
+            stroke_color = "#FFF"
+            bg_color = "#000"
             canvas_result = st_canvas(
                 fill_color="rgb(255, 255, 255)",
                 stroke_width=stroke_width,

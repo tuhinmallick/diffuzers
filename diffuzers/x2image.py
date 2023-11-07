@@ -310,10 +310,7 @@ class X2Image:
         use_pix2pix = st.checkbox("Use pix2pix", value=False)
         if input_image is not None:
             input_image = Image.open(input_image)
-            if use_pix2pix:
-                pipeline_name = "pix2pix"
-            else:
-                pipeline_name = "img2img"
+            pipeline_name = "pix2pix" if use_pix2pix else "img2img"
             # display image using html
             # convert image to base64
             # st.markdown(f"<img src='data:image/png;base64,{input_image}' width='200'>", unsafe_allow_html=True)
@@ -417,18 +414,7 @@ class X2Image:
 
         if submit:
             with st.spinner("Generating images..."):
-                if pipeline_name == "text2img":
-                    output_images, metadata = self.text2img_generate(
-                        prompt=prompt,
-                        negative_prompt=negative_prompt,
-                        scheduler=scheduler,
-                        image_size=(image_height, image_width),
-                        num_images=num_images,
-                        guidance_scale=guidance_scale,
-                        steps=steps,
-                        seed=seed,
-                    )
-                elif pipeline_name == "img2img":
+                if pipeline_name == "img2img":
                     output_images, metadata = self.img2img_generate(
                         prompt=prompt,
                         image=input_image,
@@ -449,6 +435,17 @@ class X2Image:
                         num_images=num_images,
                         guidance_scale=guidance_scale,
                         image_guidance_scale=image_guidance_scale,
+                        steps=steps,
+                        seed=seed,
+                    )
+                elif pipeline_name == "text2img":
+                    output_images, metadata = self.text2img_generate(
+                        prompt=prompt,
+                        negative_prompt=negative_prompt,
+                        scheduler=scheduler,
+                        image_size=(image_height, image_width),
+                        num_images=num_images,
+                        guidance_scale=guidance_scale,
                         steps=steps,
                         seed=seed,
                     )
